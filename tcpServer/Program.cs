@@ -6,6 +6,8 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Net.Security;
 using Bindings;
+using System.ServiceModel.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SelfHost
 {
@@ -15,7 +17,6 @@ namespace SelfHost
         static void Main(string[] args)
         {
             Uri baseAddress = new Uri(Helper.BaseAddress);
-            string transport = Helper.UnSecure;
             //var ep = new Uri(Helper.UnSecure);
             // Create the ServiceHost.
             using (ServiceHost host = new ServiceHost(typeof(HelloWorldService), baseAddress))
@@ -26,9 +27,11 @@ namespace SelfHost
                 host.AddServiceEndpoint(typeof(IMetadataExchange),
                   MetadataExchangeBindings.CreateMexTcpBinding(), "mex");
                 host.AddServiceEndpoint(typeof(IHelloWorldService), 
-                    Helper.Binding(SecurityMode.None), Helper.UnSecure);
-                //host.AddServiceEndpoint(typeof(IHelloWorldService),
-                //    Helper.Binding(SecurityMode.Transport), transport);
+                    Helper.Binding(SecurityMode.Transport), Helper.UnSecure);
+                var cert = Helper.GetCertificate();
+                host.Credentials.ServiceCertificate.Certificate = cert;
+                host.Credentials.ClientCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.None;
+
                 host.Open();
                 Console.WriteLine($"The service is ready\n meta:{baseAddress}\n Binding Address:{Helper.UnSecure}");
                 Console.WriteLine("Press <Enter> to stop the service.");

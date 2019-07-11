@@ -15,8 +15,10 @@ namespace tcpClient
     {
         [Option('s', "security", Required = false, HelpText = "Security Mode", Default = false)]
         public bool Security { get; set; }
-        [Option('a', "address", Required = false, HelpText = "Binding Address", Default = "localhost")]
-        public string hostName { get; set; }
+        [Option('h', "host", Required = true, HelpText = "Binding Address", Default = "localhost")]
+        public string Host { get; set; }
+        [Option('p', "port", Required = true, HelpText = "Binding Address", Default = "443")]
+        public int Port { get; set; }
     }
     class Program
     {
@@ -27,7 +29,7 @@ namespace tcpClient
                 Parser.Default.ParseArguments<Options>(args)
                    .WithParsed<Options>(o =>
                    {
-                       var ep = new EndpointAddress(String.Format(Helper.EndPoint,o.hostName));
+                       var ep = new EndpointAddress($"net.tcp://{o.Host}:{o.Port}/hello");
                        Console.WriteLine($"endPoint:{ep.ToString()}");
                        var mode = o.Security ? SecurityMode.Transport : SecurityMode.None;
                        var channelFactory = new ChannelFactory<IHelloWorldService>(Helper.Binding(mode));
