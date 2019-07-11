@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  tcpServer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true      
+    ports:
+      - "51200:51200"        # primary_port
+      - "51400:51400"        # wcf_port
