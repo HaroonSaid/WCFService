@@ -15,7 +15,8 @@ namespace SelfHost
         static void Main(string[] args)
         {
             Uri baseAddress = new Uri(Helper.BaseAddress);
-            string endpoint = Helper.EndPoint;
+            string transport = Helper.UnSecure;
+            //var ep = new Uri(Helper.UnSecure);
             // Create the ServiceHost.
             using (ServiceHost host = new ServiceHost(typeof(HelloWorldService), baseAddress))
             {
@@ -24,11 +25,12 @@ namespace SelfHost
                 host.Description.Behaviors.Add(smb);
                 host.AddServiceEndpoint(typeof(IMetadataExchange),
                   MetadataExchangeBindings.CreateMexTcpBinding(), "mex");
-                NetTcpBinding tcpb = new NetTcpBinding();
                 host.AddServiceEndpoint(typeof(IHelloWorldService), 
-                    Helper.Binding(SecurityMode.None), endpoint);
+                    Helper.Binding(SecurityMode.None), Helper.UnSecure);
+                //host.AddServiceEndpoint(typeof(IHelloWorldService),
+                //    Helper.Binding(SecurityMode.Transport), transport);
                 host.Open();
-                Console.WriteLine("The service is ready\n at {0}\n at {1}", baseAddress, Helper.EndPoint);
+                Console.WriteLine($"The service is ready\n meta:{baseAddress}\n Binding Address:{Helper.UnSecure}");
                 Console.WriteLine("Press <Enter> to stop the service.");
                 Console.ReadLine();
 
@@ -38,3 +40,7 @@ namespace SelfHost
         }
     }
 }
+
+
+
+

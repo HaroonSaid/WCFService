@@ -1,4 +1,5 @@
 ﻿using Bindings;
+using System;
 
 namespace SelfHost
 {
@@ -6,6 +7,7 @@ namespace SelfHost
     {
         public string SayHello(string name)
         {
+            Console.WriteLine($"message Recieved {name}");
             return string.Format("Hello, {0}", name);
         }
     }

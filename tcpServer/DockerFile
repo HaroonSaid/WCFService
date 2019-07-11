@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/framework/wcf:4.7.2-windowsservercore-ltsc2016
+﻿FROM mcr.microsoft.com/dotnet/framework/wcf:4.7.2
 
 ARG source=bin/Debug
 ARG target=C:/app
@@ -6,5 +6,10 @@ ARG target=C:/app
 WORKDIR $target
 
 COPY $source .
+EXPOSE 51200
+EXPOSE 51300
+EXPOSE 51400
+EXPOSE 80
+EXPOSE 808
 
 ENTRYPOINT ./EntryPoint.ps1

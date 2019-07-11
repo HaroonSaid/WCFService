@@ -10,8 +10,9 @@ namespace Bindings
 {
     public static class Helper
     {
-        public static string EndPoint => "net.tcp://localhost:51200/hello";
-        public static string BaseAddress => "net.tcp://localhost:51400/hello";
+        public static string EndPoint => "net.tcp://{0}:51200/hello";
+        public static string UnSecure = "net.tcp://0.0.0.0:51200/hello";
+        public static string BaseAddress => "net.tcp://0.0.0.0:51400/hello";
         public static NetTcpBinding Binding(SecurityMode securityMode)
         {
             
