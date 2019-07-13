@@ -1,7 +1,6 @@
-﻿using Bindings;
-using System;
+﻿using System;
 
-namespace SelfHost
+namespace Service
 {
     public class HelloWorldService : IHelloWorldService
     {

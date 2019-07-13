@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using Bindings;
 using System.Net.Security;
 using System.Diagnostics;
 using CommandLine;
+using Service;
 
 namespace tcpClient
 {
